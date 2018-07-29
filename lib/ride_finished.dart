@@ -82,7 +82,6 @@ class _RideFinishedPageState extends State<RideFinishedPage> {
           children: <Widget>[
             Expanded(
               child: RaisedButton(
-                color: Colors.red,
                 onPressed: () => {},
                 child: Text('Pay'),
               ),

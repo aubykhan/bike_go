@@ -1,4 +1,3 @@
-import 'package:bike_go/ride_finished.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -6,11 +5,17 @@ void main() {
 }
 
 class BikeGo extends StatelessWidget {
+  Color _primaryColor = Color.fromARGB(255, 58, 175, 185);
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: "Bike 2 Go",
-      home: new RideFinishedPage(),
+      home: new LocatorPage(),
+      theme: new ThemeData(
+        primaryColor: _primaryColor,
+        accentColor: _primaryColor,
+        buttonColor: _primaryColor
+      ),
     );
   }
 }
@@ -21,9 +26,6 @@ class LocatorPage extends StatelessWidget {
     return new Scaffold(
       appBar: new AppBar(title: new Text("Bike 2 Go")),
       drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the Drawer if there isn't enough vertical
-        // space to fit everything.
         child: ListView(
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
