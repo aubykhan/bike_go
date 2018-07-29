@@ -33,7 +33,7 @@ class LocatorPage extends StatelessWidget {
             DrawerHeader(
               child: Text('Profile', style: new TextStyle(fontSize: 24.0)),
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             ListTile(
