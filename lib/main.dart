@@ -1,3 +1,4 @@
+import 'package:bike_go/ride_finished.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,7 +10,7 @@ class BikeGo extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: "Bike 2 Go",
-      home: new LocatorPage(),
+      home: new RideFinishedPage(),
     );
   }
 }
