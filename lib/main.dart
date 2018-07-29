@@ -6,11 +6,17 @@ void main() {
 }
 
 class BikeGo extends StatelessWidget {
+  Color _primaryColor = Color.fromARGB(255, 58, 175, 185);
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: "Bike 2 Go",
       home: new LocatorPage(),
+      theme: new ThemeData(
+        primaryColor: _primaryColor,
+        accentColor: _primaryColor,
+        buttonColor: _primaryColor
+      ),
     );
   }
 }
@@ -95,9 +101,6 @@ class LocatorPageState extends State<LocatorPage> {
             );
           }),
       drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the Drawer if there isn't enough vertical
-        // space to fit everything.
         child: ListView(
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
@@ -105,7 +108,7 @@ class LocatorPageState extends State<LocatorPage> {
             DrawerHeader(
               child: Text('Profile', style: new TextStyle(fontSize: 24.0)),
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             ListTile(
