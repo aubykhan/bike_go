@@ -31,21 +31,21 @@ class LocatorPage extends StatefulWidget {
 class LocatorPageState extends State<LocatorPage> {
   final String title;
 
-  bool bike_status = false;
+  bool bikeStatus = false;
 
   _checkAvailability(DocumentSnapshot document) {
-    int bike_count;
+    int bikeCount;
     Firestore.instance.runTransaction((transaction) async {
       DocumentSnapshot freshSnap = await transaction.get(document.reference);
-      bike_count = freshSnap['bike_count'];
+      bikeCount = freshSnap['bike_count'];
     });
-    if (bike_count > 0) {
+    if (bikeCount > 0) {
       setState(() {
-        bike_status = true;
+        bikeStatus = true;
       });
     } else {
       setState(() {
-        bike_status = false;
+        bikeStatus = false;
       });
     }
   }
@@ -94,7 +94,7 @@ class LocatorPageState extends State<LocatorPage> {
                   ),
                 ),
                 RaisedButton(
-                  onPressed:  bike_status ? () => {} : null,
+                  onPressed:  bikeStatus ? () => {} : null,
                   child: Text('Proceed to unlock'),
                 )
               ],
