@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "315894695192",
+    "firebase_url": "https://bikeride-a4d86.firebaseio.com",
+    "project_id": "bikeride-a4d86",
+    "storage_bucket": "bikeride-a4d86.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315894695192:android:e7aaa0d11ff8c7fc",
+        "android_client_info": {
+          "package_name": "com.example.bikego"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315894695192-oknfttvlm5u8hqr8qho2rlf21h0ug2o6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bikego",
+            "certificate_hash": "7daf667e4852d027312424c008cb5df15d6f88b2"
+          }
+        },
+        {
+          "client_id": "315894695192-bptni7f2nq2ocvpubnem373utk39e3mp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU3u7XasGlw1wl9FeGtbw7F6XQ2vJYI6M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315894695192-bptni7f2nq2ocvpubnem373utk39e3mp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
