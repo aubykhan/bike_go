@@ -1,3 +1,5 @@
+import 'package:bike_go/global.dart';
+import 'package:bike_go/qr.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -12,14 +14,18 @@ class BikeGo extends StatelessWidget {
     return new MaterialApp(
       title: "Bike 2 Go",
       home: new LocatorPage(),
+      routes: {
+        Routes.qr: (context) => new QrScanPage(),
+      },
       theme: new ThemeData(
-        primaryColor: _primaryColor,
-        accentColor: _primaryColor,
-        buttonColor: _primaryColor
-      ),
+          primaryColor: _primaryColor,
+          accentColor: _primaryColor,
+          buttonColor: _primaryColor),
     );
   }
 }
+
+class HomePage {}
 
 class LocatorPage extends StatefulWidget {
   @override
@@ -34,43 +40,103 @@ class LocatorPageState extends State<LocatorPage> {
   bool bikeStatus = false;
 
   _checkAvailability(DocumentSnapshot document) {
-    int bikeCount;
-    Firestore.instance.runTransaction((transaction) async {
-      DocumentSnapshot freshSnap = await transaction.get(document.reference);
-      bikeCount = freshSnap['bike_count'];
-    });
+    int bikeCount = 0;
+    bikeCount = document.data['bike_count'];
     if (bikeCount > 0) {
       setState(() {
         bikeStatus = true;
       });
     } else {
       setState(() {
+        print("bikeCount setsmaller");
         bikeStatus = false;
       });
+    }
+
+    if (bikeStatus) {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) => Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text('What do you want to do?',
+                        style: Theme.of(context).textTheme.title),
+                    SizedBox(
+                      height: 16.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        OutlineButton.icon(
+                          borderSide: BorderSide(
+                              color: Theme.of(context).accentColor, width: 4.0),
+                          shape: StadiumBorder(),
+                          textColor: Theme.of(context).primaryColor,
+                          icon: Icon(
+                            Icons.navigation,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          label: const Text('Navigate'),
+                          onPressed: () async => await showDialog(
+                                context: context,
+                                builder: (context) => new AlertDialog(
+                                      title:ListTile(
+                                          contentPadding: EdgeInsets.all(4.0),
+                                          leading: Icon(Icons.warning),
+                                          title: Text('Coming soon...'),
+                                          subtitle: Text(
+                                              'This feature is under construction.'),
+                                        ),
+                                      
+                                    ),
+                              ),
+                        ),
+                        OutlineButton.icon(
+                          borderSide: BorderSide(
+                              color: Theme.of(context).accentColor, width: 4.0),
+                          shape: StadiumBorder(),
+                          textColor: Theme.of(context).primaryColor,
+                          icon: Icon(
+                            Icons.lock_open,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          label: const Text('Unlock'),
+                          onPressed: () =>
+                              Navigator.pushNamed(context, Routes.qr),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ));
     }
   }
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
-    return new ListTile(
-      key: new ValueKey(document.documentID),
-      title: new Container(
-        decoration: new BoxDecoration(
-          border: new Border.all(color: const Color(0x80000000)),
-          borderRadius: new BorderRadius.circular(5.0),
-        ),
-        padding: const EdgeInsets.all(10.0),
-        child: new Row(
+    int bikeCount = document['bike_count'];
+    Color color = bikeCount > 0 ? Colors.green : Colors.red;
+
+    return Card(
+      child: new ListTile(
+        key: new ValueKey(document.documentID),
+        title: new Text('Station #${document['sn']}'),
+        subtitle: Text(document['address']),
+        trailing: Column(
           children: <Widget>[
-            new Expanded(
-              child: new Text(document['sn']),
+            Icon(
+              Icons.directions_bike,
+              color: color,
             ),
             new Text(
-              document['bike_count'].toString(),
+              bikeCount.toString(),
+              style: TextStyle(color: color),
             ),
           ],
         ),
+        onTap: () => _checkAvailability(document),
       ),
-      onTap: () => _checkAvailability(document),
     );
   }
 
@@ -82,22 +148,11 @@ class LocatorPageState extends State<LocatorPage> {
           stream: Firestore.instance.collection('stations').snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) return const Text('Loading...');
-            return Column(
-              children: <Widget>[
-                Expanded(
-                  child: new ListView.builder(
-                    itemCount: snapshot.data.documents.length,
-                    padding: const EdgeInsets.only(top: 10.0),
-                    itemExtent: 55.0,
-                    itemBuilder: (context, index) =>
-                        _buildListItem(context, snapshot.data.documents[index]),
-                  ),
-                ),
-                RaisedButton(
-                  onPressed:  bikeStatus ? () => {} : null,
-                  child: Text('Proceed to unlock'),
-                )
-              ],
+            return new ListView.builder(
+              itemCount: snapshot.data.documents.length,
+              padding: const EdgeInsets.only(top: 10.0),
+              itemBuilder: (context, index) =>
+                  _buildListItem(context, snapshot.data.documents[index]),
             );
           }),
       drawer: Drawer(

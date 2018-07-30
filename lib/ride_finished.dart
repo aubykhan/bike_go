@@ -1,3 +1,4 @@
+import 'package:bike_go/global.dart';
 import 'package:flutter/material.dart';
 
 class RideFinishedPage extends StatefulWidget {
@@ -10,21 +11,35 @@ class _RideFinishedPageState extends State<RideFinishedPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pay'),
+        title: Text('Payment'),
       ),
       body: Container(
-        child: ListView(
+        child: Column(
           children: <Widget>[
             Card(
               child: Column(
                 children: <Widget>[
                   ListTile(
-                    title: Text('Bike Locked'),
-                    trailing: Icon(Icons.check_circle, color: Colors.green),
+                    title: Text(
+                      'Bike Locked',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    trailing: Icon(
+                      Icons.check_circle,
+                      color: Colors.green,
+                      size: 36.0,
+                    ),
                   ),
                   ListTile(
-                    title: Text('Gadgets returned!'),
-                    trailing: Icon(Icons.check_circle,color: Colors.green,),
+                    title: Text(
+                      'Gadgets returned!',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    trailing: Icon(
+                      Icons.check_circle,
+                      color: Colors.grey,
+                      size: 36.0,
+                    ),
                   )
                 ],
               ),
@@ -43,53 +58,63 @@ class _RideFinishedPageState extends State<RideFinishedPage> {
                   ListTile(
                     leading: Icon(Icons.attach_money),
                     title: Text('Fare'),
-                    trailing: Text('Rs. 30'),
+                    trailing: Text('PKR 30'),
                   ),
                   ListTile(
                     leading: Icon(Icons.directions_car),
-                    title: Text('Distance'),
-                    trailing: Text('12 km'),
+                    title: Text('Time'),
+                    trailing: Text('10 min'),
                   )
                 ],
               ),
             ),
-            Card(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0, top: 8.0),
-                    child: Text(
-                      'Congrats!',
-                      style: Theme.of(context).textTheme.title,
-                    ),
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.fastfood),
-                    title: Text('300 calories burned!'),
-                  )
-                ],
-              ),
-            )
           ],
-          itemExtent: 160.0,
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(left: 32.0),
-        child: Row(
+      bottomNavigationBar: BottomAppBar(
+        child: new Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Expanded(
-              child: RaisedButton(
-                onPressed: () => {},
-                child: Text('Pay'),
+            new IconButton(
+              icon: new Icon(
+                Icons.menu,
+                color: Colors.transparent,
               ),
+              onPressed: () => {},
+            ),
+            new IconButton(
+              icon: new Icon(
+                Icons.apps,
+                color: Colors.transparent,
+              ),
+              onPressed: () => {},
             ),
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () async => await showDialog(
+              context: context,
+              builder: (context) => new AlertDialog(
+                content: ListTile(
+                      contentPadding: EdgeInsets.all(4.0),
+                      leading: Icon(Icons.sentiment_satisfied),
+                      title: Text('Thankyou!'),
+                    ),
+                actions: <Widget>[
+                new FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.of(context).pushReplacementNamed(Routes.root);
+                    },
+                    child: const Text('OK'))
+              ],
+                  ),
+            ),
+        icon: Icon(Icons.monetization_on),
+        label: Text('Pay'),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
-
 }
