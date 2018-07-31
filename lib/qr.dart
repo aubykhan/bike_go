@@ -20,6 +20,14 @@ class _QrScanPageState extends State<QrScanPage> {
     super.initState();
   }
 
+_skip() {
+  hasUsedQr = false;
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => InRide()),
+    );
+}
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -30,10 +38,7 @@ class _QrScanPageState extends State<QrScanPage> {
             icon: new Icon(
               Icons.skip_next,
             ),
-            onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => InRide()),
-                ),
+            onPressed: _skip
           )
         ],
       ),
@@ -127,6 +132,7 @@ class _QrScanPageState extends State<QrScanPage> {
                             await transaction.update(freshSnap.reference,
                                 {'bike_count': freshSnap['bike_count'] - 1});
                           });
+                          hasUsedQr = true;
                           Navigator.pop(context);
                           Navigator.push(
                             context,

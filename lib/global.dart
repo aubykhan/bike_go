@@ -4,3 +4,4 @@ abstract class Routes {
 }
 
 int stationIndex = 0;
+bool hasUsedQr = false;
