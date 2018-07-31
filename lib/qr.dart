@@ -119,7 +119,7 @@ class _QrScanPageState extends State<QrScanPage> {
                   actions: <Widget>[
                     new FlatButton(
                         onPressed: () {
-                          DocumentSnapshot ds = snapshot.data.documents[0];
+                          DocumentSnapshot ds = snapshot.data.documents[stationIndex];
                           Firestore.instance
                               .runTransaction((transaction) async {
                             DocumentSnapshot freshSnap = await transaction

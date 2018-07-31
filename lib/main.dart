@@ -114,7 +114,7 @@ class LocatorPageState extends State<LocatorPage> {
     }
   }
 
-  Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
+  Widget _buildListItem(BuildContext context, DocumentSnapshot document, int index) {
     int bikeCount = document['bike_count'];
     Color color = bikeCount > 0 ? Colors.green : Colors.red;
 
@@ -135,7 +135,11 @@ class LocatorPageState extends State<LocatorPage> {
             ),
           ],
         ),
-        onTap: () => _checkAvailability(document),
+        onTap: ()  
+        {
+          stationIndex = index;
+          _checkAvailability(document);
+          }
       ),
     );
   }
@@ -152,7 +156,7 @@ class LocatorPageState extends State<LocatorPage> {
               itemCount: snapshot.data.documents.length,
               padding: const EdgeInsets.only(top: 10.0),
               itemBuilder: (context, index) =>
-                  _buildListItem(context, snapshot.data.documents[index]),
+                  _buildListItem(context, snapshot.data.documents[index], index),
             );
           }),
       drawer: Drawer(
