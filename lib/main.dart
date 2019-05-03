@@ -35,7 +35,6 @@ class LocatorPage extends StatefulWidget {
 }
 
 class LocatorPageState extends State<LocatorPage> {
-  final String title;
 
   bool bikeStatus = false;
 
